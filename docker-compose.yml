@@ -1,8 +1,11 @@
-version: '3'
+version: "3"
 
 services:
-  node:
-    container_name: node
-    build: .
-    ports:
-      - 3000:3000
+ node:
+  container_name: node
+  build: .
+  volumes:
+   - ./:/home/node/app
+  ports:
+   - 3000:3000
+  command: "npm start"
