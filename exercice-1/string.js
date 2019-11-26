@@ -54,7 +54,6 @@ const snake_case = str => {
 };
 
 console.log("Snake Case");
-
 console.log(snake_case("test"));
 console.log(snake_case("Test"));
 console.log(snake_case(" test"));
@@ -62,3 +61,24 @@ console.log(snake_case("test TEst tst"));
 console.log(snake_case(""));
 console.log(snake_case(null));
 console.log(snake_case({}));
+
+const leet = str => {
+	return str.map(letter => {
+		switch (letter.toLowerCase()) {
+			case "a":
+				return "4";
+			case "e":
+				return "3";
+			case "i":
+				return "1";
+			case "o":
+				return "0";
+			case "u":
+				return "(_)";
+			case "y":
+				return "7";
+			default:
+				return letter;
+		}
+	});
+};
