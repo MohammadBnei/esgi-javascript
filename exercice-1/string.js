@@ -36,7 +36,7 @@ console.log(capitalize({}));
 
 const camelCase = str => {
 	if (verifyStringType(str)) return "";
-	return capitalize(str).replace(/[\s+_!@#$%^&*(),.?":{}|<>]/g, "");
+	return capitalize(str).replace(/[\s+]/g, "");
 };
 
 console.log("Camel Case");
@@ -65,7 +65,7 @@ console.log(snake_case({}));
 
 const leet = str => {
 	if (verifyStringType(str)) return "";
-	return str.map(letter => {
+	return str.split().map(letter => {
 		switch (letter.toLowerCase()) {
 			case "a":
 				return "4";
