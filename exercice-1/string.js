@@ -19,6 +19,7 @@ function capitalize(str) {
 
 	return str
 		.toLowerCase()
+		.replace(/[\s+_!@#$%^&*(),.?":{}|<>]/g, " ")
 		.split(" ")
 		.map(word => ucfirst(word))
 		.join(" ");
@@ -63,6 +64,7 @@ console.log(snake_case(null));
 console.log(snake_case({}));
 
 const leet = str => {
+	if (verifyStringType(str)) return "";
 	return str.map(letter => {
 		switch (letter.toLowerCase()) {
 			case "a":
