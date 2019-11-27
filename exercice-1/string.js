@@ -65,22 +65,108 @@ console.log(snake_case({}));
 
 const leet = str => {
 	if (verifyStringType(str)) return "";
-	return str.split().map(letter => {
-		switch (letter.toLowerCase()) {
+	return str.replace(/[aeiouy]/gi, item => {
+		switch (item) {
 			case "a":
+			case "A":
 				return "4";
 			case "e":
+			case "E":
 				return "3";
 			case "i":
+			case "I":
 				return "1";
 			case "o":
+			case "O":
 				return "0";
 			case "u":
+			case "U":
 				return "(_)";
 			case "y":
+			case "Y":
 				return "7";
 			default:
-				return letter;
+				return item;
 		}
 	});
 };
+
+console.log("Leet");
+console.log(leet("anaconda"));
+
+const prop_access = (obj, path) => {
+	if (verifyStringType(path)) return obj;
+
+	try {
+		const splittedPath = path.split(".");
+		let curObj = { ...obj };
+
+		for (let i = 0; i < splittedPath.length; i++) {
+			curObj = curObj[splittedPath[i]];
+		}
+
+		return curObj || path;
+	} catch (error) {
+		return path;
+	}
+};
+
+const prairie = {
+	animal: {
+		courgette: "momo",
+	},
+};
+
+console.log("Prop_access");
+console.log(prop_access(prairie, "animal.courgette"));
+console.log(prop_access(prairie, "animal.courgette.vert.bleu"));
+
+const verlan = str => {
+	if (verifyStringType(str)) return "";
+
+	return str
+		.split(" ")
+		.map(word => [...word].reverse().join(""))
+		.join(" ");
+};
+
+console.log("Verlan");
+console.log(verlan("anaconda zebi"));
+
+const yoda = str => {
+	if (verifyStringType(str)) return "";
+
+	return str
+		.split(/\s/g)
+		.reverse()
+		.join(" ");
+};
+
+console.log("Yoda");
+console.log(yoda("Hello world"));
+
+const vig = (str, key) => {
+	if (verifyStringType(str) || verifyStringType(key)) return "";
+
+	const toAlphabetCode = letter => letter.charCodeAt(0) - 97;
+	const keyGenerator = (function*() {
+		let i = 0;
+		const lowKey = key.toLowerCase();
+		while (true) {
+			yield lowKey.charCodeAt(i) - 97;
+			i++;
+			if (i === key.length) i = 0;
+		}
+	})();
+
+	return [...str.toLowerCase()]
+		.map(letter => {
+			if (letter.match(/[^A-Za-z0-9]/)) return letter;
+			const char = toAlphabetCode(letter);
+			return String.fromCharCode(((char + keyGenerator.next().value) % 26) + 97);
+		})
+		.join("");
+};
+
+console.log("Vig");
+console.log(vig("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG.", "abc"));
