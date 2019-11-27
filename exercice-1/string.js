@@ -6,14 +6,6 @@ function ucfirst(str) {
 	return str[0].toUpperCase() + str.substring(1);
 }
 
-console.log(ucfirst("test"));
-console.log(ucfirst("Test"));
-console.log(ucfirst(" test"));
-console.log(ucfirst("test Test tst"));
-console.log(ucfirst(""));
-console.log(ucfirst(null));
-console.log(ucfirst({}));
-
 function capitalize(str) {
 	if (verifyStringType(str)) return "";
 
@@ -25,43 +17,16 @@ function capitalize(str) {
 		.join(" ");
 }
 
-console.log("Capitalize");
-console.log(capitalize("test"));
-console.log(capitalize("Test"));
-console.log(capitalize(" test"));
-console.log(capitalize("test TEst tst"));
-console.log(capitalize(""));
-console.log(capitalize(null));
-console.log(capitalize({}));
-
 const camelCase = str => {
 	if (verifyStringType(str)) return "";
 	return capitalize(str).replace(/[\s+]/g, "");
 };
-
-console.log("Camel Case");
-console.log(camelCase("test"));
-console.log(camelCase("Test"));
-console.log(camelCase(" test"));
-console.log(camelCase("test TE2st_tst"));
-console.log(camelCase(""));
-console.log(camelCase(null));
-console.log(camelCase({}));
 
 const snake_case = str => {
 	if (verifyStringType(str)) return "";
 
 	return str.toLowerCase().replace(/\s/g, "_");
 };
-
-console.log("Snake Case");
-console.log(snake_case("test"));
-console.log(snake_case("Test"));
-console.log(snake_case(" test"));
-console.log(snake_case("test TEst tst"));
-console.log(snake_case(""));
-console.log(snake_case(null));
-console.log(snake_case({}));
 
 const leet = str => {
 	if (verifyStringType(str)) return "";
@@ -91,9 +56,6 @@ const leet = str => {
 	});
 };
 
-console.log("Leet");
-console.log(leet("anaconda"));
-
 const prop_access = (obj, path) => {
 	if (verifyStringType(path)) return obj;
 
@@ -117,10 +79,6 @@ const prairie = {
 	},
 };
 
-console.log("Prop_access");
-console.log(prop_access(prairie, "animal.courgette"));
-console.log(prop_access(prairie, "animal.courgette.vert.bleu"));
-
 const verlan = str => {
 	if (verifyStringType(str)) return "";
 
@@ -130,9 +88,6 @@ const verlan = str => {
 		.join(" ");
 };
 
-console.log("Verlan");
-console.log(verlan("anaconda zebi"));
-
 const yoda = str => {
 	if (verifyStringType(str)) return "";
 
@@ -141,9 +96,6 @@ const yoda = str => {
 		.reverse()
 		.join(" ");
 };
-
-console.log("Yoda");
-console.log(yoda("Hello world"));
 
 const vig = (str, key) => {
 	if (verifyStringType(str) || verifyStringType(key)) return "";
@@ -167,6 +119,3 @@ const vig = (str, key) => {
 		})
 		.join("");
 };
-
-console.log("Vig");
-console.log(vig("THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG.", "abc"));
