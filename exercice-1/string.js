@@ -67,16 +67,10 @@ const prop_access = (obj, path) => {
 			curObj = curObj[splittedPath[i]];
 		}
 
-		return curObj || path;
+		return curObj || path + " not exist";
 	} catch (error) {
-		return path;
+		return path + " not exist";
 	}
-};
-
-const prairie = {
-	animal: {
-		courgette: "momo",
-	},
 };
 
 const verlan = str => {
