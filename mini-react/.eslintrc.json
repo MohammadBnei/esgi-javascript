@@ -10,8 +10,10 @@
     },
     "parserOptions": {
         "ecmaVersion": 2015,
-        "sourceType": "script"
+        "sourceType": "module"
     },
     "rules": {
+        "semi": ["error", "never"],
+        "quotes" : ["warn", "single"]
     }
 }

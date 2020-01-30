@@ -1,43 +1,37 @@
 // eslint-disable-next-line no-undef
-const Components = require('./Components')
+import { render, createElement, mount, diff } from './vdom'
 
-class H1 extends Components {
-    constructor() {
-        super()
-        this.type = 'h1'
-        this.attr = {
-            'class': 'test',
-        }
-        this.events = {
-            'onClick': this.toggleActivation
-        }
+const createVApp = (count) => createElement('div', {
+	attrs: {
+		id: 'app',
+		dataCount: count,
+	},
+	children: [
+		'The current count is: ',
+		String(count),
+		createElement('img', {
+			attrs: {
+				src: 'https://media.giphy.com/media/eGrYr7UkywqhIBlWth/giphy.gif',
+			}
+		})
+	]
+})
 
-    }
-}
+let count = 0
+let vApp = createVApp(count)
 
-class Div extends Components {
-    constructor() {
-        super()
-        this.type = 'div'
+const $app = render(vApp)
 
-        this.children = [
-            new H1()
-        ]
+let $rootEl = mount($app, document.getElementById('app'))
 
-        this.state = { isActivated: false }
-    }
+setInterval(() => {
+	count++
+	const vNewApp = createVApp(count)
+	const patch = diff(vApp, vNewApp)
+    
+	$rootEl = patch($rootEl)
+    
+	vApp = vNewApp
+}, 1000)
 
-   toggleActivation() {
-        const activation = !this.state.isActivated
-        this.setState({
-            isActivated: activation
-        })
-    }
-}
-const div = new Div()
-
-console.log(div._getVdomElem(), div._getState(), div._getId())
-
-div.toggleActivation()
-
-console.log(div._getState())
+console.log($app)
