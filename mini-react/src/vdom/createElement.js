@@ -1,7 +1,8 @@
-const createElement = (tagName, {attrs = {}, children = []} = {}) => {
+const createElement = (tagName, { attrs = {}, events = {}, children = []} = {}) => {
 	return {
 		tagName,
 		attrs,
+		events,
 		children
 	}
 }

@@ -45,6 +45,7 @@ const diffChildren = (oldVChildren, newVChildren) => {
 		childPatches.push(diff(oldVChild, newVChildren[i]))
 	})
 
+
 	const additionalPatches = []
 	for (const additionalVChild of newVChildren.slice(oldVChildren.length)) {
 		additionalPatches.push($node => {
@@ -54,7 +55,6 @@ const diffChildren = (oldVChildren, newVChildren) => {
 	}
 
 	return $parent => {
-		console.log(childPatches.length, $parent.childNodes.length);
 		for (const [patch, $child] of zip(childPatches, $parent.childNodes)) {
 			patch($child)
 		}
@@ -87,7 +87,7 @@ const diff = (vOldNode, vNewNode) => {
 		if (vOldNode !== vNewNode) {
 			return $node => {
 				const $newNode = render(vNewNode)
-				$node.replaceWith()
+				$node.replaceWith($newNode)
 				return $newNode
 			}
 		} else {

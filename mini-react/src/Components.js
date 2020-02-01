@@ -1,11 +1,11 @@
-import { idGenerator, eventBus } from './utils'
+import { uuid, eventBus } from './utils'
 
 
 class Components {
 	constructor() {
-		this.id = idGenerator.next().value
-		this.type = 'div'
-		this.attr = {}
+		this.id = uuid.next().value
+		this.tagName = 'div'
+		this.attrs = {}
 		this.events = {}
 		this.children = []
 
@@ -16,12 +16,12 @@ class Components {
 		return this.id
 	}
 
-	verifyType() {
+	verifyTagName() {
 		if (![
 			'div',
 			'h1'
-		].includes(this.type))
-			throw new Error('Incorrect type')    
+		].includes(this.tagName))
+			throw new Error('Incorrect tagName')    
 	}
 
 	verifyEvents() {
@@ -32,12 +32,9 @@ class Components {
 	}
 
 	_getVdomElem() {
-		this.verifyType()
-		this.verifyEvents()
-
 		return {
-			type: this.type,
-			attr: this.attr,
+			tagName: this.tagName,
+			attrs: this.attrs,
 			events: this.events,
 			children: this.children
 		}

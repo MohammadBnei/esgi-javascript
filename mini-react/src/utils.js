@@ -48,10 +48,10 @@ const eventBus = () => {
 
 
 
-const generator = idGenerator()
+const uuid = idGenerator()
 const bus = eventBus()
 
 export {
-	generator,
+	uuid,
 	bus
 }
