@@ -1,8 +1,17 @@
 import { uuid, bus as eventBus } from './utils'
 
+export const lifecycle = {
+	INITIAL: 0,
+	MOUNTED: 1,
+	UPDATE: 2,
+	UNMOUNTED: 3
+}
 
+const {
+	INITIAL,
+} = lifecycle
 class Components {
-	constructor() {
+	constructor(props) {
 		this.id = uuid.next().value
 		this.tagName = 'div'
 		this.attrs = {}
@@ -10,43 +19,35 @@ class Components {
 		this.children = []
 
 		this.state = {}
+		this.props = props
+
+		this._internalState = INITIAL
+
+		this.setState = this.setState.bind(this)
+		this.display = this.display.bind(this)
+		this.setInternalState = this.setInternalState.bind(this)
 	}
 
-	_getId() {
-		return this.id
-	}
-
-	verifyTagName() {
-		if (![
-			'div',
-			'h1'
-		].includes(this.tagName))
-			throw new Error('Incorrect tagName')    
-	}
-
-	verifyEvents() {
-		Object.keys(this.events).forEach(name => {
-			if (!name.startsWith('on'))
-				throw new Error(`Event ${name} is incorrect`)
-		})
-	}
-
-	_getVdomElem() {
-		return {
-			tagName: this.tagName,
-			attrs: this.attrs,
-			events: this.events,
-			children: this.children,
-			state: this.state
+	setInternalState(internalState) {
+		if (Object.values(lifecycle).includes(internalState)){
+			this.internalState = internalState
+		} else {
+			throw new Error(`${internalState.prototype.name}: ${internalState} is not a valid state`)
 		}
-
 	}
 	
 	setState(newState) {
 		Object.assign(this.state, newState)
-		eventBus.publish('state:update')
+		eventBus.publish('state:update', this)
 	}
 
+	/**
+	 * Returns the DOM element corresponding to the options passed, or the components option if not specified
+	 * @param {Destructured} tagName 
+	 * @param {Destructured} attrs 
+	 * @param {Destructured} events 
+	 * @param {Destructured} children 
+	 */
 	display({
 		tagName = this.tagName,
 		attrs = this.attrs,
@@ -74,21 +75,39 @@ class Components {
 			$el.addEventListener(k, v)
 		}
 
-		// append all children as specified in vNode.children
-		// e.g. <div id="app"><img></div>
-		for (const child of children) {
-			let $child
+		$el.setAttribute('data-id', this.id)
 
-			if (typeof child === 'string')
-				$child = document.createTextNode(child)
-			else 
-				$child = child.render()
-			
-			$el.appendChild($child)
-		}
-
-		return $el
+		return [$el, children]
 	}
+
+	/**
+	verifyTagName() {
+		if (![
+			'div',
+			'h1'
+		].includes(this.tagName))
+			throw new Error('Incorrect tagName')    
+	}
+
+	verifyEvents() {
+		Object.keys(this.events).forEach(name => {
+			if (!name.startsWith('on'))
+				throw new Error(`Event ${name} is incorrect`)
+		})
+	}
+
+	_getVdomElem() {
+		return {
+			tagName: this.tagName,
+			attrs: this.attrs,
+			events: this.events,
+			children: this.children,
+			state: this.state
+		}	
+	}
+	*/
 }
 
 export default Components
+
+

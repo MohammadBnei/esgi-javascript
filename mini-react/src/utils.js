@@ -50,13 +50,38 @@ const eventBus = () => {
 			return
         
 		Object.keys(subscribtions[eventType])
-			.forEach(id => subscribtions[eventType][id](arg))
+			.forEach(id => subscribtions[eventType][id](...arg))
 	}
 
 	return {
 		subscribe,
 		publish
 	}
+}
+
+export const createDomNode = (tagName, {...attrs}, {...events}, children) => {
+	const $element = document.createElement(tagName)
+
+	// add all attributes as specified in attrs
+	// e.g. <div id="app"></div>
+	for (const [k, v] of Object.entries(attrs)) {
+		$element.setAttribute(k, v)
+	}
+
+	// add all events as specified in events
+	for (const [k, v] of Object.entries(events)) {
+		$element.addEventListener(k, v)
+	}
+
+	if (children instanceof HTMLElement) {
+		$element.appendChild(children)
+	}
+
+	if (typeof children === 'string') {
+		$element.appendChild(document.createTextNode(children))
+	}
+
+	return $element
 }
 
 
