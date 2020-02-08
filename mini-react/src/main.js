@@ -1,6 +1,35 @@
 // eslint-disable-next-line no-undef
-import { render, mount, diff } from './vdom'
+import { mount } from './vdom'
 import Components from './Components'
+
+class Counter extends Components {
+	constructor() {
+		super()
+		this.tagName = 'div'
+		this.state = {
+			count: 0
+		}
+		this.events = {
+			onclick: this.incrementCount.bind(this)
+		}
+	}
+
+	incrementCount() {
+		const c = this.state.count + 1
+		this.setState({
+			count: c
+		})
+	}
+
+	render() {
+		return this.display({
+			children: [
+				`The count is : ${this.state.count}`
+			]
+		})
+	}
+
+}
 
 class Image extends Components {
 	constructor() {
@@ -10,7 +39,14 @@ class Image extends Components {
 			src: 'https://media.giphy.com/media/eGrYr7UkywqhIBlWth/giphy.gif',
 		}
 	}
+
+	render() {
+		return this.display()
+	}
 }
+
+const image = new Image()
+const counter = new Counter()
 
 class Root extends Components {
 	constructor() {
@@ -19,14 +55,25 @@ class Root extends Components {
 		this.attrs = {
 			id: 'app',
 		}
-		this.children = [
-			Image
-		]
+	}
+
+	render() {
+		return this.display({
+			children: [
+				counter,
+				image,
+			]
+		})
 	}
 }
 
-const $app = render(Root)
+const _root = new Root()
 
-let $rootEl = mount($app, document.getElementById('app'))
+mount(_root.render(), document.getElementById('app'))
 
-console.log($app)
+/**
+ * 
+ counter.incrementCount()
+ 
+ mount(render(_root), document.getElementById('app'))
+ */
