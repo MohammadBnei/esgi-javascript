@@ -1,4 +1,4 @@
-import { uuid, eventBus } from './utils'
+import { uuid, bus as eventBus } from './utils'
 
 
 class Components {
@@ -44,7 +44,7 @@ class Components {
 	
 	setState(newState) {
 		Object.assign(this.state, newState)
-		//eventBus.publish('state:update', this.id)
+		eventBus.publish('state:update')
 	}
 
 	display({

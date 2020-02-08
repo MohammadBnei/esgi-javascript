@@ -1,35 +1,9 @@
 // eslint-disable-next-line no-undef
 import { mount } from './vdom'
 import Components from './Components'
+import Counter from './component/Counter'
+import { bus } from './utils';
 
-class Counter extends Components {
-	constructor() {
-		super()
-		this.tagName = 'div'
-		this.state = {
-			count: 0
-		}
-		this.events = {
-			onclick: this.incrementCount.bind(this)
-		}
-	}
-
-	incrementCount() {
-		const c = this.state.count + 1
-		this.setState({
-			count: c
-		})
-	}
-
-	render() {
-		return this.display({
-			children: [
-				`The count is : ${this.state.count}`
-			]
-		})
-	}
-
-}
 
 class Image extends Components {
 	constructor() {
@@ -45,8 +19,34 @@ class Image extends Components {
 	}
 }
 
-const image = new Image()
 const counter = new Counter()
+
+
+class Button extends Components {
+	constructor() {
+		super()
+		this.tagName = 'button'
+		this.events = {
+			'click': counter.incrementCount
+		}
+		this.attrs = {
+			'type': 'button'
+		}
+	}
+
+	render() {
+		return this.display({
+			children: [
+				'Increment'
+			]
+		})
+	}
+}
+
+const image = new Image()
+const counter2 = new Counter()
+
+const btn = new Button()
 
 class Root extends Components {
 	constructor() {
@@ -62,6 +62,8 @@ class Root extends Components {
 			children: [
 				counter,
 				image,
+				counter2,
+				btn
 			]
 		})
 	}
@@ -70,6 +72,12 @@ class Root extends Components {
 const _root = new Root()
 
 mount(_root.render(), document.getElementById('app'))
+
+const stateUpdateBus = bus.subscribe('state:update', () => {
+	mount(_root.render(), document.getElementById('app'))
+})
+
+
 
 /**
  * 

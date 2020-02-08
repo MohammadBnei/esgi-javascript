@@ -15,6 +15,11 @@ const eventBus = () => {
 	const subscribtions = {}
 	const getNextUniqueId = idGenerator()
 
+	/**
+	 * Subscribe to an event
+	 * @param {string} eventType The name of the event you want to subscribe to
+	 * @param {fn} callback The function to execute whe the event is fired
+	 */
 	const subscribe = (eventType, callback) => {
 		const id = getNextUniqueId.next().value
 
@@ -24,6 +29,9 @@ const eventBus = () => {
 		subscribtions[eventType][id] = callback
         
 		return {
+			/**
+			 * Remove the subscribtion to the event
+			 */
 			unsubscribe: () => {
 				delete subscribe[eventType][id]
 				if (Object.keys(subscribtions[eventType]).length === 0)
@@ -32,7 +40,12 @@ const eventBus = () => {
 		}
 	}
 
-	const publish = (eventType, arg) => {
+	/**
+	 * Publish an event
+	 * @param {string} eventType The name of the event so thate every subscriber listening to it gets an update
+	 * @param {*} arg the arguments passed to the callbacks
+	 */
+	const publish = (eventType, ...arg) => {
 		if (!subscribtions[eventType])
 			return
         
