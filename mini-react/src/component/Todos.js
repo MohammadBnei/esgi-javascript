@@ -27,11 +27,15 @@ export default class Todos extends Components {
 	}
     
 	updateTodo(todo) {
-		const todos = this.state.todos.map(_todo => _todo.id === todo.id ? todo : _todo)
-
-		this.setState({
-			todos
-		})
+		Axios.put('https://jsonplaceholder.typicode.com/todos/' + todo.id, todo)
+			.then(({ data }) => {
+                
+				const todos = this.state.todos.map(_todo => _todo.id === data.id ? data : _todo)
+                
+				this.setState({
+					todos
+				})
+			})
 	}
     
 	addTodo(title) {

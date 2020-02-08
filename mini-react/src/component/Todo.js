@@ -4,7 +4,10 @@ import { createDomNode } from '../utils'
 export default class Todo extends Components {
 	constructor(props) {
 		super(props)
-		this.tagName = 'li'
+        this.tagName = 'li'
+        this.attrs = {
+            class: 'todo'
+        }
 	}
 
 	render() {
