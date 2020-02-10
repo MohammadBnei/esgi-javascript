@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-undef
-import { mount, updateDOM } from './vdom'
-import Components from './Components'
-import { bus } from './utils'
+import { mount, updateDOM } from './React/vdom'
+import Components from './React/Components'
+import { bus } from './React/utils'
 import Todos from './component/Todos'
 
 

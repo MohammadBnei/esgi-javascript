@@ -1,4 +1,4 @@
-import Components from "../Components"
+import Components from '../React/Components'
 
 export default class Button extends Components {
 	constructor(onClick, text) {

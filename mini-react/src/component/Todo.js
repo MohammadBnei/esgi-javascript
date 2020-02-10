@@ -1,5 +1,4 @@
-import Components from '../Components'
-import { createDomNode } from '../utils'
+import Components, { createDomNode } from '../React/Components'
 
 export default class Todo extends Components {
 	constructor(props) {

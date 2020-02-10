@@ -1,8 +1,7 @@
-import Components from '../Components'
+import Components from '../React/Components'
 import Axios from 'axios'
 import Todo from './Todo'
 import AddTodo from './AddTodo'
-import { uuid } from '../utils'
 
 export default class Todos extends Components {
 	constructor() {

@@ -10,6 +10,7 @@ export const lifecycle = {
 const {
 	INITIAL,
 } = lifecycle
+
 class Components {
 	constructor(props) {
 		this.id = uuid.next().value
@@ -62,18 +63,7 @@ class Components {
 		
 		// create the element
 		// e.g. <div></div>
-		const $el = document.createElement(tagName)
-
-		// add all attributes as specified in attrs
-		// e.g. <div id="app"></div>
-		for (const [k, v] of Object.entries(attrs)) {
-			$el.setAttribute(k, v)
-		}
-
-		// add all events as specified in events
-		for (const [k, v] of Object.entries(events)) {
-			$el.addEventListener(k, v)
-		}
+		const $el = createDomNode(tagName, attrs, events)
 
 		$el.setAttribute('data-id', this.id)
 
@@ -109,5 +99,30 @@ class Components {
 }
 
 export default Components
+
+export const createDomNode = (tagName, {...attrs}, {...events}, children) => {
+	const $element = document.createElement(tagName)
+
+	// add all attributes as specified in attrs
+	// e.g. <div id="app"></div>
+	for (const [k, v] of Object.entries(attrs)) {
+		$element.setAttribute(k, v)
+	}
+
+	// add all events as specified in events
+	for (const [k, v] of Object.entries(events)) {
+		$element.addEventListener(k, v)
+	}
+
+	if (children instanceof HTMLElement) {
+		$element.appendChild(children)
+	}
+
+	if (typeof children === 'string') {
+		$element.appendChild(document.createTextNode(children))
+	}
+
+	return $element
+}
 
 
