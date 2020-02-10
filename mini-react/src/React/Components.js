@@ -70,32 +70,9 @@ class Components {
 		return [$el, children]
 	}
 
-	/**
-	verifyTagName() {
-		if (![
-			'div',
-			'h1'
-		].includes(this.tagName))
-			throw new Error('Incorrect tagName')    
+	render() {
+		throw new Error('Render function not defined')
 	}
-
-	verifyEvents() {
-		Object.keys(this.events).forEach(name => {
-			if (!name.startsWith('on'))
-				throw new Error(`Event ${name} is incorrect`)
-		})
-	}
-
-	_getVdomElem() {
-		return {
-			tagName: this.tagName,
-			attrs: this.attrs,
-			events: this.events,
-			children: this.children,
-			state: this.state
-		}	
-	}
-	*/
 }
 
 export default Components

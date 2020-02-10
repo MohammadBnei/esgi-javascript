@@ -1,4 +1,5 @@
-import Components from '../Components'
+import Components from '../React/Components'
+import Button from './Button'
 
 class Counter extends Components {
 	constructor() {
@@ -7,8 +8,10 @@ class Counter extends Components {
 		this.state = {
 			count: 0,
 		}
-		
+
 		this.incrementCount = this.incrementCount.bind(this)
+
+		this.button = new Button(this.incrementCount, 'Increment')
 	}
 
 	incrementCount() {
@@ -20,7 +23,8 @@ class Counter extends Components {
 	render() {
 		return this.display({
 			children: [
-				`The count is : ${this.state.count}`
+				`The count is : ${this.state.count}`,
+				this.button
 			]
 		})
 	}

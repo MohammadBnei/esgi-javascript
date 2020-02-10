@@ -3,6 +3,8 @@ import { mount, updateDOM } from './React/vdom'
 import Components from './React/Components'
 import { bus } from './React/utils'
 import Todos from './component/Todos'
+import Counter from './component/Counter'
+import router from './React/Router/router'
 
 
 const todos = new Todos()
@@ -28,17 +30,15 @@ class Root extends Components {
 
 const _root = new Root()
 
-mount(_root, document.getElementById('app'))
+const counter = new Counter()
+
+const addRoute = router()
+
+addRoute('/', _root)
+addRoute('/counter', counter)
+
+
 
 const stateUpdateBus = bus.subscribe('state:update', (element) => {
 	updateDOM(element)
 })
-
-
-
-/**
- * 
- counter.incrementCount()
- 
- mount(render(_root), document.getElementById('app'))
- */
