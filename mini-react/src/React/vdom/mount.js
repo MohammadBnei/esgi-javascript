@@ -3,11 +3,11 @@ export default (_root, $target) => {
 	const cdm = []
 	const $root = getDOMelement(_root, { beforeRender: cwm, afterRender: cdm })
 	
-	for (const fn in cwm) {
+	for (fn of cwm) {
 		fn()
 	}
 	$target.replaceWith($root)
-	for (const fn in cdm) {
+	for (fn of cdm) {
 		fn()
 	}
 }
