@@ -7,9 +7,13 @@ export default (element) => {
     
 	const $rootElement = document.querySelector(`[data-id="${element.id}"]`)
     
-	cwu.forEach(fn => fn())
+	for (const fn in cwu) {
+		fn()
+	}
 	$rootElement.replaceWith($newElement)
-	cdu.forEach(fn => fn())
+	for (const fn in cdu) {
+		fn()
+	}
 }
 
 const getDOMelement = (element, {

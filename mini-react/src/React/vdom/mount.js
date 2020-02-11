@@ -3,9 +3,13 @@ export default (_root, $target) => {
 	const cdm = []
 	const $root = getDOMelement(_root, { beforeRender: cwm, afterRender: cdm })
 	
-	cwm.forEach(fn => fn())
+	for (const fn in cwm) {
+		fn()
+	}
 	$target.replaceWith($root)
-	cdm.forEach(fn => fn())
+	for (const fn in cdm) {
+		fn()
+	}
 }
 
 const getDOMelement = (element, {

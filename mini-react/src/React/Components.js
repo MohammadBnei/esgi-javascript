@@ -11,6 +11,10 @@ const {
 	INITIAL,
 } = lifecycle
 
+/**
+ * Extend the Components class to have access to lifecycle methods, state and pass props through the constructor
+ * You must implement a render function
+ */
 class Components {
 	constructor(props) {
 		this.id = uuid.next().value
@@ -37,6 +41,11 @@ class Components {
 		}
 	}
 	
+	/**
+	 * Merge the newState object to the current state of the class
+	 * Then publishes a state:update event 
+	 * @param {Object} newState 
+	 */
 	setState(newState) {
 		Object.assign(this.state, newState)
 		eventBus.publish('state:update', this)
@@ -77,6 +86,13 @@ class Components {
 
 export default Components
 
+/**
+ * Returns a DOM node containing the options passed
+ * @param {string} tagName 
+ * @param {Object} attributes
+ * @param {Object} events
+ * @param {DOMNode} children 
+ */
 export const createDomNode = (tagName, {...attrs}, {...events}, children) => {
 	const $element = document.createElement(tagName)
 
