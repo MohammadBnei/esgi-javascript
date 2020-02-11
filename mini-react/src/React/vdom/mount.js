@@ -2,7 +2,8 @@ export default (_root, $target) => {
 	const cwm = []
 	const cdm = []
 	const $root = getDOMelement(_root, { beforeRender: cwm, afterRender: cdm })
-	
+	let fn
+
 	for (fn of cwm) {
 		fn()
 	}

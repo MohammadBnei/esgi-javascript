@@ -6,12 +6,13 @@ export default (element) => {
 	})
     
 	const $rootElement = document.querySelector(`[data-id="${element.id}"]`)
-    
-	for (const fn of cwu) {
+	
+	let fn
+	for (fn of cwu) {
 		fn()
 	}
 	$rootElement.replaceWith($newElement)
-	for (const fn of cdu) {
+	for (fn of cdu) {
 		fn()
 	}
 }
