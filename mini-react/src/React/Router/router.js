@@ -1,4 +1,3 @@
-import { bus } from "../utils"
 import { mount } from "../vdom";
 import { createDomNode } from "../Components";
 
@@ -15,24 +14,17 @@ export default () => {
     // will directly create the DOM objects.
     const addRoute = (path, rootComponent) => {
         return routes[path] = rootComponent;
-    };
-
-    const resolveRoute = (route) => {
-        try {
-            return routes[route]
-        } catch (error) {
-            throw new Error('Route not defined')
-        }
     }
 
     const router = (evt) => {
         const url = window.location.pathname || "/"
-        const routeResolved = resolveRoute(url) || createDomNode('span',{}, {}, '404 not found')
+        const routeResolved = routes[url] || createDomNode('span',{}, {}, '404 not found')
         mount(routeResolved, document.getElementById(appDiv))
     }
+
     // For first load or when routes are changed in browser url box.
-    window.addEventListener('load', router);
-    window.addEventListener('hashchange', router);
+    window.addEventListener('load', router)
+    window.addEventListener('hashchange', router)
 
     return addRoute
 } 

@@ -59,6 +59,89 @@ const eventBus = () => {
 	}
 }
 
+/**
+ * Returns the object located at the path put
+ * Returns false if not found
+ * {Object} the object to compare
+ * {String} the search path
+ */
+const prop_access =  (object, path) => {
+    if (path === "" || path === null ) {
+        return object;
+    }
+
+    let pathWay = path.trim().split('.');
+
+    let tmp = object;
+
+    for (let i = 0; pathWay.length; i++) {
+
+        if (i === pathWay.length) {
+            return true;
+        }
+
+        if (!Object.prototype.hasOwnProperty.call(tmp, pathWay[i])) {
+            console.log(path + " does not exist");
+            return false;
+        }
+
+
+        tmp = tmp[pathWay[i]];
+
+    }
+    return true;
+
+}
+
+/**
+ * Returns true if the object's structure and elements are similar to the passed conf
+ * @param {Object} value to compare
+ * @param {Object} conf configuration in the form { type, properties }
+ */
+const type_check = (value, conf) => {
+	const type_check_v2 = (object, typev2) => {
+		const type_check_v1 = (object, typev1) => {
+			switch(typeof object){
+				case 'object':
+					if(Array.isArray(object)) return typev1 === "array";
+					if(object === null) return typev1 === "null";
+				default:
+					return typeof  object === typev1;
+			}
+
+		}
+
+		for (const [k, v] of Object.entries(typev2)) {
+			switch (k) {
+				default:
+					if (!type_check_v1(object, v)) return false;
+					break;
+			}
+		}
+
+		return true
+	}
+
+    if (
+        !conf.hasOwnProperty('properties') ||
+        typeof value !== 'object' ||
+        conf.type !== 'object'
+    ) {
+        return false;
+    }
+
+    for (let property in conf.properties) {
+        let isValid = type_check_v2(value[property], conf.properties[property]);
+        if (!isValid) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+
 
 
 const uuid = idGenerator()
@@ -66,5 +149,7 @@ const bus = eventBus()
 
 export {
 	uuid,
-	bus
+	bus,
+	prop_access,
+	type_check
 }

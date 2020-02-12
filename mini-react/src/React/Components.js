@@ -1,21 +1,10 @@
-import { uuid, bus as eventBus } from './utils'
-
-export const lifecycle = {
-	INITIAL: 0,
-	MOUNTED: 1,
-	UPDATE: 2,
-	UNMOUNTED: 3
-}
-
-const {
-	INITIAL,
-} = lifecycle
+import { uuid, bus as eventBus, prop_access } from './utils'
 
 /**
  * Extend the Components class to have access to lifecycle methods, state and pass props through the constructor
  * You must implement a render function
  */
-class Components {
+export default class Components {
 	constructor(props) {
 		this.id = uuid.next().value
 		this.tagName = 'div'
@@ -24,30 +13,45 @@ class Components {
 		this.children = []
 
 		this.state = {}
+		this.propTypes = null
 		this.props = props
-
-		this._internalState = INITIAL
 
 		this.setState = this.setState.bind(this)
 		this.display = this.display.bind(this)
-		this.setInternalState = this.setInternalState.bind(this)
+		this.shouldUpdate = this.shouldUpdate.bind(this)
+		this.update = this.update.bind(this)
 	}
 
-	setInternalState(internalState) {
-		if (Object.values(lifecycle).includes(internalState)){
-			this.internalState = internalState
-		} else {
-			throw new Error(`${internalState.prototype.name}: ${internalState} is not a valid state`)
-		}
-	}
-	
 	/**
 	 * Merge the newState object to the current state of the class
-	 * Then publishes a state:update event 
-	 * @param {Object} newState 
+	 * @param {Object} state 
 	 */
-	setState(newState) {
-		Object.assign(this.state, newState)
+	setState(state) {
+		const oldState = this.state
+		const newState = Object.assign({}, this.state, state)
+
+		this.state = newState
+	
+		if (this.shouldUpdate(oldState, newState)) {
+			this.update()
+		}
+	}
+
+	shouldUpdate(oldState, newState) {
+		if (Object.keys(oldState).length !== Object.keys(newState).length) {
+			return true
+		}
+
+		for (const [k, v] of Object.entries(oldState)) {
+			if (v !== newState[k]) {
+				return true
+			}
+		}
+
+		return false
+	}
+
+	update() {
 		eventBus.publish('state:update', this)
 	}
 
@@ -83,8 +87,6 @@ class Components {
 		throw new Error('Render function not defined')
 	}
 }
-
-export default Components
 
 /**
  * Returns a DOM node containing the options passed

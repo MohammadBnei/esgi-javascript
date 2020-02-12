@@ -7,7 +7,7 @@ export default (_root, $target) => {
 	for (fn of cwm) {
 		fn()
 	}
-	$target.replaceWith($root)
+	$target.appendChild($root)
 	for (fn of cdm) {
 		fn()
 	}

@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-undef
 import { mount, updateDOM } from './src/React/vdom'
 import Components, { createDomNode } from './src/React/Components'
-import { bus } from './src/React/utils'
+import { bus, prop_access, type_check } from './src/React/utils'
 import router from './src/React/Router/router'
 
 
@@ -33,5 +33,7 @@ module.exports = {
 	router,
 	bus,
 	Components,
-	createDomNode
+	createDomNode,
+	prop_access,
+	type_check
 };
