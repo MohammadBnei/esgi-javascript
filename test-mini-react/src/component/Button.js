@@ -8,7 +8,9 @@ export default class Button extends Components {
 			'click': onClick
 		}
 		this.attrs = {
-			'type': 'button'
+
+			'type': 'button',
+			class : 'button'
 		}
 	}
 

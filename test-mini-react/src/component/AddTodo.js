@@ -27,6 +27,7 @@ export default class AddTodo extends Components {
 				$input.value = ''
 			}
 		}, 'Add')
+		
         
 		return [$input, $button]
 	}
