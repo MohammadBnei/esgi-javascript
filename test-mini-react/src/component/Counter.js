@@ -12,19 +12,30 @@ class Counter extends Components {
 		this.incrementCount = this.incrementCount.bind(this)
 
 		this.button = new Button(this.incrementCount, 'Increment')
+		this.buttonBack = new Button(this.goPrev, 'back')
+
 	}
 
 	incrementCount() {
+		
 		this.setState({
 			count: this.state.count + 1
 		})
+
+
 	}
+	 goPrev(){ 
+		window.history.back() 
+	 }
 
 	render() {
+		
 		return this.display({
 			children: [
 				`The count is : ${this.state.count}`,
-				this.button
+				this.button,
+				'\n',
+				this.buttonBack
 			]
 		})
 	}

@@ -54,7 +54,7 @@ export default class Components {
 	update() {
 		eventBus.publish('state:update', this)
 	}
-
+	
 	/**
 	 * Returns the DOM element corresponding to the options passed, or the components option if not specified
 	 * @param {Destructured} tagName 
@@ -102,7 +102,9 @@ export const createDomNode = (tagName, {...attrs}, {...events}, children) => {
 	// e.g. <div id="app"></div>
 	for (const [k, v] of Object.entries(attrs)) {
 		$element.setAttribute(k, v)
+
 	}
+
 
 	// add all events as specified in events
 	for (const [k, v] of Object.entries(events)) {

@@ -16,8 +16,9 @@ export default class Todos extends Components {
 		this.removeTodo = this.removeTodo.bind(this)
 
 		this.$addTodo = new AddTodo({addTodo: this.addTodo})
+
 	}
-    
+
 	componentDidMount() {
 		Axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10')
 			.then(({ data }) => this.setState({
